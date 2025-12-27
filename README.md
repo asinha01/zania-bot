@@ -3,14 +3,28 @@
 A robust, containerized, and asynchronous RAG (Retrieval-Augmented Generation) API designed to answer questions from PDF and JSON documents.
 
 ## Features
+### Production-Grade RAG
+* **MMR Retrieval:** Maximal Marginal Relevance for diverse, non-redundant results (k=10, fetch_k=25)
+* **Smart Citations:** Automatic page-level extraction from LLM evidence sections
+* **No Hallucinations:** Returns "Not found" when information isn't in the document
+* **Partial Answers:** Explicitly lists "Missing:" information instead of making up details
 
-* **Asynchronous Architecture:** Uses `asyncio` with `ThreadPoolExecutor` to handle file I/O and Embedding generation without blocking the main event loop.
-* **Defense in Depth:**
-    * **Strict Validation:** Enforces file type checks and a **50MB** size limit to prevent resource exhaustion.
-    * **Resilience:** Implements exponential backoff retries (via `tenacity`) for OpenAI API calls to handle transient network failures.
-    * **Graceful Degradation:** Validates inputs early to provide fast feedback (400 Bad Request) before expensive processing begins.
-* **Observability:** Structured JSON logging for production-grade monitoring and debugging.
-* **Containerization:** Full Docker and Docker Compose support for reproducible deployments.
+### Performance & Reliability
+* **Async I/O:** Non-blocking architecture with `ThreadPoolExecutor` for CPU-bound tasks
+* **Auto Retry:** Exponential backoff for transient OpenAI API failures (via `tenacity`)
+* **Token Tracking:** Full observability with cost/usage monitoring via `get_openai_callback()`
+* **Efficient Chunking:** Token-aware splitting (1000 tokens, 200 overlap) for optimal retrieval
+
+### Security & Validation
+* **Input Validation:** Strict file type checks (PDF/JSON only)
+* **Size Limits:** 50MB max file size, 50 questions per request
+* **Early Validation:** Fast-fail before expensive embedding generation (400 Bad Request)
+* **Structured Logging:** JSON logs for production monitoring and debugging
+
+### Developer Experience
+* **Docker Ready:** Single-command deployment with `docker-compose`
+* **Comprehensive Tests:** 11 unit + integration tests with mocked dependencies
+* **API Documentation:** Auto-generated OpenAPI/Swagger at `/docs`
 
 ## Setup & Running
 
