@@ -16,43 +16,43 @@ A robust, containerized, and asynchronous RAG (Retrieval-Augmented Generation) A
 
 **Prerequisite:** You need an OpenAI API Key (`sk-...`).
 
-### Option 1: Docker Compose (Recommended)
-This is the easiest way to run the application in a clean environment.
+### Option 1: Docker (Recommended)
+```bash
+# 1. Clone repository
+git clone 
+cd zania-rag
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <your-repo-link>
-    cd <repo-folder>
-    ```
+# 2. Set your OpenAI API key (REQUIRED)
+export OPENAI_API_KEY="sk-..."
 
-2.  **Configure the API Key:**
-    Create a `.env` file in the root directory and paste your key:
-    ```bash
-    echo "OPENAI_API_KEY=sk-proj-..." > .env
-    ```
+# 3. Start services
+docker-compose up --build
 
-3.  **Run the application:**
-    ```bash
-    docker compose up --build
-    ```
-    The API will be available at `http://localhost:8000`.
+# 4. Access the application
+# Frontend: http://localhost:8501
+# API Docs: http://localhost:8000/docs
+```
 
-### Option 2: Local Python
-If you prefer running without Docker:
+**Note:** Use `docker compose` (space) if you have Docker 20.10+, or `docker-compose` (hyphen) for older versions.
 
-1.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+### Option 2: Local Development
+```bash
+# 1. Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-2.  **Set the API Key:**
-    * **Mac/Linux:** `export OPENAI_API_KEY="sk-proj-..."`
-    * **Windows:** `$env:OPENAI_API_KEY="sk-proj-..."`
+# 2. Install dependencies
+pip install -r requirements.txt
 
-3.  **Run the server:**
-    ```bash
-    uvicorn main:app --reload
-    ```
+# 3. Set API key
+export OPENAI_API_KEY="sk-..."
+
+# 4. Start backend
+uvicorn main:app --reload
+
+# 5. Start frontend (in another terminal)
+streamlit run frontend.py
+```
 
 ## Usage
 
