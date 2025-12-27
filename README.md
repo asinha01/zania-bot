@@ -54,7 +54,7 @@ If you prefer running without Docker:
     uvicorn main:app --reload
     ```
 
-## 🧪 Usage
+## Usage
 
 ### API Documentation (Swagger UI)
 Once running, visit **http://localhost:8000/docs** to test the API interactively.
