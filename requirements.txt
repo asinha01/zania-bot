@@ -4,9 +4,11 @@ python-multipart
 langchain
 langchain-openai
 langchain-community
-pypdf
 faiss-cpu
-tiktoken
+pypdf
+tenacity
 pytest
 httpx
+tiktoken
+streamlit
 requests
