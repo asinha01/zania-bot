@@ -1,11 +1,28 @@
-version: '3.8'
+version: "3.8"
 
 services:
   zania-backend:
     build: .
-    container_name: zania-bot-container
+    container_name: zania-bot-backend
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  zania-frontend:
+    build: .
+    container_name: zania-bot-frontend
+    command: ["streamlit", "run", "frontend.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    ports:
+      - "8501:8501"
+    environment:
+      # Frontend calls backend by service name (better than localhost inside container)
+      ZANIA_API_URL: http://zania-backend:8000/answer
+    depends_on:
+      - zania-backend

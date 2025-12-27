@@ -12,3 +12,4 @@ httpx
 tiktoken
 streamlit
 requests
+python-dotenv
